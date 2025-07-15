@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Probability Toss</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div id="side-menu" class="side-menu hidden">
+    <ul>
+  <li onclick="returnToMenu(); toggleMenu()">🏠 Home</li>
+  <li onclick="showLeaderboard(); toggleMenu()">🏆 Leaderboard</li>
+  <li onclick="showAllTables(); toggleMenu()">📊 All Tables</li>
+  <li onclick="showQuickToss(); toggleMenu()">🪙 Toss a Coin</li>
+</ul>
+
+  </div>
+
+  <div id="menu" class="fade-in">
+    <h1>Welcome to Probability Toss!</h1>
+    <p>This website lets you experience probability in action through simple coin toss simulations.</p>
+    <div class="info">
+      
+    </div>
+      <h3>🎯 Why this example?</h3>
+      <p>Coin tosses offer a clean 50-50 chance and are perfect to demonstrate randomness and probability.</p>
+      <h3>📊 What to expect?</h3>
+      <p>Choose 1 to 4 coins to toss. After each set, you’ll see how often you get 1 head, 2 heads, etc.</p>
+      <h3>📈 Crowd-Sourced Probabilities</h3>
+      <p>As more people toss coins, the site updates live probabilities and compares them to theoretical values!</p>
+    </div>
+    <button onclick="showTestMenu()">▶ Start Testing</button>
+  </div>
+
+  <div id="test-menu" class="hidden">
+    <h2>Select Number of Coins</h2>
+    <div class="menu-buttons">
+      <button onclick="startToss(1)">1 Coin</button>
+      <button onclick="startToss(2)">2 Coins</button>
+      <button onclick="startToss(3)">3 Coins</button>
+      <button onclick="startToss(4)">4 Coins</button>
+    </div>
+  </div>
+
+  <div id="toss-section" class="hidden">
+    <div id="animation-msg" class="hidden">Tossing...</div>
+
+    <div id="live-count" class="hidden count-table">
+      <h3>No. of Tails and Heads so far:</h3>
+      <p>No of Coins: <span id="live-n">0</span></p>
+      <table>
+        <tr><th>Heads</th><th>Tails</th></tr>
+        <tr><td id="head-count">0</td><td id="tail-count">0</td></tr>
+      </table>
+    </div>
+
+    <img id="coin-image" class="coin-image hidden" src="" alt="Coin" />
+    <p id="result-msg" class="hidden"></p>
+
+    <button id="toss-button" onclick="tossCoin()">Toss Coin 1</button>
+
+    <div id="after-toss-options" class="hidden">
+      <button onclick="showTable()">📊 Show Table</button>
+      <button onclick="returnToMenu()">🔙 Return to Menu</button>
+    </div>
+  </div>
+
+  <div id="quick-toss" class="hidden">
+    <h2>Can't decide? Just toss!</h2>
+    <p>Click the button below to toss a single coin and see what fate has in store. 🔮</p>
+    <div id="quick-animation-msg" class="hidden">Tossing...</div>
+    <img id="quick-coin-image" class="coin-image hidden" src="" alt="Coin" />
+    <p id="quick-result-msg" class="hidden"></p>
+    <button onclick="quickToss()">🪙 Toss Coin</button>
+    <br/><br/>
+    <button onclick="returnToMenu()">🔙 Return to Menu</button>
+  </div>
+
+  <div id="result-table" class="hidden">
+    <h2>📊 Probability Table</h2>
+    <table id="prob-table">
+      <thead id="table-header"></thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <br>
+    <button onclick="returnToMenu()">🏠 Return to Home Page</button>
+  </div>
+
+  <!-- Leaderboard -->
+<div id="leaderboard" class="hidden">
+  <h2>🏆 Leaderboard</h2>
+  <p><b>Most Picked Coin Option:</b> <span id="most-picked"></span></p>
+
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>Coin Option</th>
+        <th>Pick Count</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard-body"></tbody>
+  </table>
+</div>
+
+
+  <div id="all-tables" class="hidden">
+    <h2>📊 All Probability Tables</h2>
+    <div id="all-prob-container"></div>
+  </div>
+
+  <!-- Quick Toss Page -->
+<div id="quick-toss-section" class="hidden">
+  <h2>🎯 Can't decide? Just toss!</h2>
+  <p>Click the button below to simulate a single coin toss.</p>
+  <button onclick="quickToss()">Toss Coin</button>
+
+  <div id="quick-animation-msg" class="hidden">Tossing...</div>
+
+  <img id="toss-coin-image" class="coin-image hidden" src="" alt="Toss Coin" />
+  <p id="toss-result-msg" class="hidden"></p>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

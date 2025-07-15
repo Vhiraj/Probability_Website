@@ -1,0 +1,211 @@
+body {
+  font-family: 'Cascadia Code', monospace;
+  background: linear-gradient(to right, #1c1f27, #2e3340);
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+h1, h2 {
+  color: #ffd700;
+  font-size: 2rem;
+}
+
+h3 {
+  color: #00ffc8;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: #00c3ff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0099cc;
+}
+
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.coin-image {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+#result-msg, #quick-result-msg {
+  font-size: 1.3rem;
+  color: #ffdd57;
+  margin: 10px 0;
+}
+
+#animation-msg, #quick-animation-msg {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #ffdd57;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+  font-size: 1rem;
+}
+
+table {
+  width: 90%;
+  margin: 10px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ffffff50;
+  text-align: center;
+}
+
+th {
+  background-color: #444;
+}
+
+.info {
+  max-width: 800px;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.count-table {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.hamburger {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.side-menu {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-menu li {
+  margin: 10px 0;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.side-menu li:hover {
+  color: #00c3ff;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes flipCoin {
+  0% { transform: rotateY(0); content: url("head.png"); }
+  50% { transform: rotateY(180deg); content: url("tail.png"); }
+  100% { transform: rotateY(360deg); content: url("head.png"); }
+}
+
+.coin-animate {
+  animation: flipCoin 1.5s ease-in-out;
+}
+
+#leaderboard ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#leaderboard li {
+  font-size: 1.2rem;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin: 8px auto;
+  max-width: 400px;
+}
+
+#most-picked {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #ffd700;
+}
+
+#quick-toss-section {
+  padding-top: 30px;
+}
+
+#quick-toss-section h2 {
+  font-size: 1.8rem;
+  color: #00ffc8;
+}
+
+#quick-toss-section p {
+  font-size: 1.2rem;
+}
+
+.leaderboard-table {
+  width: 60%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 1.2rem;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+  padding: 12px 20px;
+  border: 1px solid #ffffff50;
+  text-align: center;
+}
+
+.leaderboard-table th {
+  background-color: #444;
+  color: #ffd700;
+}
