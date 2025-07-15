@@ -1,9 +1,8 @@
 let selectedCoins = 0;
 let currentToss = 0;
 let outcomes = [];
-let database = JSON.parse(localStorage.getItem("database")) || { 1: {}, 2: {}, 3: {}, 4: {} };
-let totalTosses = JSON.parse(localStorage.getItem("totalTosses")) || { 1: 0, 2: 0, 3: 0, 4: 0 };
-let picks = JSON.parse(localStorage.getItem("picks")) || { 1: 0, 2: 0, 3: 0, 4: 0 };
+let database = { 1: {}, 2: {}, 3: {}, 4: {} };
+let totalTosses = { 1: 0, 2: 0, 3: 0, 4: 0 };
 let picks = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
 function toggleMenu() {
@@ -18,28 +17,22 @@ function showTestMenu() {
 function startToss(n) {
   selectedCoins = n;
   picks[n]++;
-  localStorage.setItem("picks", JSON.stringify(picks)); // save pick count
-
   currentToss = 0;
   outcomes = [];
 
   hideAll();
   document.getElementById('toss-section').classList.remove('hidden');
 
-  // Clear image before first toss
   const coinImg = document.getElementById('coin-image');
   coinImg.style.display = 'none';
   coinImg.src = '';
 
-  // Reset UI
   document.getElementById('result-msg').classList.add('hidden');
-  document.getElementById('result-msg').textContent = '';
   document.getElementById('toss-button').textContent = "Toss Coin 1";
   document.getElementById('toss-button').classList.remove('hidden');
   document.getElementById('after-toss-options').classList.add('hidden');
   document.getElementById('live-count').classList.add('hidden');
 }
-
 
 function tossCoin() {
   const coinImg = document.getElementById('coin-image');
@@ -109,8 +102,6 @@ function processResult() {
   if (!database[selectedCoins][label]) database[selectedCoins][label] = 0;
   database[selectedCoins][label]++;
   totalTosses[selectedCoins]++;
-  localStorage.setItem("database", JSON.stringify(database));
-  localStorage.setItem("totalTosses", JSON.stringify(totalTosses));
 }
 
 function showTable() {
@@ -141,32 +132,17 @@ function showLeaderboard() {
   hideAll();
   document.getElementById('leaderboard').classList.remove('hidden');
 
-  // Find most picked
   let max = Math.max(...Object.values(picks));
-  let mostPickedEntry = Object.entries(picks).find(([_, v]) => v === max);
-  let mostPicked = mostPickedEntry ? mostPickedEntry[0] : "None";
+  let mostPicked = Object.entries(picks).filter(([_, v]) => v === max)[0][0];
 
-  document.getElementById('most-picked').textContent = `${mostPicked} Coin(s) (${max} times)`;
+  document.getElementById('most-picked').textContent = `${mostPicked} Coins (${max} times)`;
 
-  // Build leaderboard table
   const body = document.getElementById('leaderboard-body');
-  body.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Coin Option</th>
-          <th>Times Picked</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${Object.entries(picks)
-          .map(([k, v]) => `<tr><td>${k} Coin(s)</td><td>${v}</td></tr>`)
-          .join('')}
-      </tbody>
-    </table>
-  `;
+  body.innerHTML = '';
+  Object.entries(picks).forEach(([k, v]) => {
+    body.innerHTML += `<tr><td>${k} Coin(s)</td><td>${v}</td></tr>`;
+  });
 }
-
 
 
 function showAllTables() {
