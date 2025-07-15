@@ -10,27 +10,23 @@
   <div class="hamburger" onclick="toggleMenu()">☰</div>
   <div id="side-menu" class="side-menu hidden">
     <ul>
-  <li onclick="returnToMenu(); toggleMenu()">🏠 Home</li>
-  <li onclick="showLeaderboard(); toggleMenu()">🏆 Leaderboard</li>
-  <li onclick="showAllTables(); toggleMenu()">📊 All Tables</li>
-  <li onclick="showQuickToss(); toggleMenu()">🪙 Toss a Coin</li>
-</ul>
-
+      <li onclick="returnToMenu(); toggleMenu()">🏠 Home</li>
+      <li onclick="showLeaderboard(); toggleMenu()">🏆 Leaderboard</li>
+      <li onclick="showAllTables(); toggleMenu()">📊 All Tables</li>
+      <li onclick="showQuickToss(); toggleMenu()">🪙 Toss a Coin</li>
+    </ul>
   </div>
 
   <div id="menu" class="fade-in">
     <h1>Welcome to Probability Toss!</h1>
     <p>This website lets you experience probability in action through simple coin toss simulations.</p>
-    <div class="info">
-      
-    </div>
-      <h3>🎯 Why this example?</h3>
-      <p>Coin tosses offer a clean 50-50 chance and are perfect to demonstrate randomness and probability.</p>
-      <h3>📊 What to expect?</h3>
-      <p>Choose 1 to 4 coins to toss. After each set, you’ll see how often you get 1 head, 2 heads, etc.</p>
-      <h3>📈 Crowd-Sourced Probabilities</h3>
-      <p>As more people toss coins, the site updates live probabilities and compares them to theoretical values!</p>
-    </div>
+    <div class="info"></div>
+    <h3>🎯 Why this example?</h3>
+    <p>Coin tosses offer a clean 50-50 chance and are perfect to demonstrate randomness and probability.</p>
+    <h3>📊 What to expect?</h3>
+    <p>Choose 1 to 4 coins to toss. After each set, you’ll see how often you get 1 head, 2 heads, etc.</p>
+    <h3>📈 Crowd-Sourced Probabilities</h3>
+    <p>As more people toss coins, the site updates live probabilities and compares them to theoretical values!</p>
     <button onclick="showTestMenu()">▶ Start Testing</button>
   </div>
 
@@ -89,40 +85,26 @@
   </div>
 
   <!-- Leaderboard -->
-<div id="leaderboard" class="hidden">
-  <h2>🏆 Leaderboard</h2>
-  <p><b>Most Picked Coin Option:</b> <span id="most-picked"></span></p>
-
-  <table class="leaderboard-table">
-    <thead>
-      <tr>
-        <th>Coin Option</th>
-        <th>Pick Count</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboard-body"></tbody>
-  </table>
-</div>
-
+  <div id="leaderboard" class="hidden">
+    <h2>🏆 Leaderboard</h2>
+    <p><b>Most Picked Coin Option:</b> <span id="most-picked"></span></p>
+    <table class="leaderboard-table">
+      <thead>
+        <tr><th>Coin Option</th><th>Pick Count</th></tr>
+      </thead>
+      <tbody id="leaderboard-body"></tbody>
+    </table>
+  </div>
 
   <div id="all-tables" class="hidden">
     <h2>📊 All Probability Tables</h2>
     <div id="all-prob-container"></div>
   </div>
 
-  <!-- Quick Toss Page -->
-<div id="quick-toss-section" class="hidden">
-  <h2>🎯 Can't decide? Just toss!</h2>
-  <p>Click the button below to simulate a single coin toss.</p>
-  <button onclick="quickToss()">Toss Coin</button>
+  <!-- Firebase SDK -->
+  <script type="module" src="firebase-init.js"></script>
 
-  <div id="quick-animation-msg" class="hidden">Tossing...</div>
-
-  <img id="toss-coin-image" class="coin-image hidden" src="" alt="Toss Coin" />
-  <p id="toss-result-msg" class="hidden"></p>
-</div>
-
-
+  <!-- Main Script -->
   <script src="script.js"></script>
 </body>
 </html>
