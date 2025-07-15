@@ -189,22 +189,23 @@ th {
   font-size: 1.2rem;
 }
 
-/* 🌟 NEW Leaderboard Table Style 🌟 */
-#leaderboard table {
+.leaderboard-table {
   width: 60%;
-  margin: auto;
-  font-size: 1.2rem;
-  background-color: rgba(255,255,255,0.08);
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;
+  font-size: 1.2rem;
 }
 
-#leaderboard th {
-  background-color: #00c3ff;
-  color: #fff;
+.leaderboard-table th, .leaderboard-table td {
+  padding: 12px 20px;
+  border: 1px solid #ffffff50;
+  text-align: center;
 }
 
-#leaderboard td {
-  background-color: rgba(0,0,0,0.1);
-  color: white;
+.leaderboard-table th {
+  background-color: #444;
+  color: #ffd700;
 }
