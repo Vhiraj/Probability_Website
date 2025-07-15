@@ -5,6 +5,25 @@ let database = { 1: {}, 2: {}, 3: {}, 4: {} };
 let totalTosses = { 1: 0, 2: 0, 3: 0, 4: 0 };
 let picks = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
+// Firestore
+let db;
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.db) {
+    db = window.db;
+    loadDatabaseFromFirestore(); // Fetch existing toss data
+  }
+});
+
+async function loadDatabaseFromFirestore() {
+  for (let n = 1; n <= 4; n++) {
+    const docRef = await db.collection("tosses").doc(`${n}Coins`).get();
+    const data = docRef.exists ? docRef.data() : {};
+    database[n] = data.results || {};
+    totalTosses[n] = data.total || 0;
+    picks[n] = data.picks || 0;
+  }
+}
+
 function toggleMenu() {
   document.getElementById('side-menu').classList.toggle('hidden');
 }
@@ -32,6 +51,8 @@ function startToss(n) {
   document.getElementById('toss-button').classList.remove('hidden');
   document.getElementById('after-toss-options').classList.add('hidden');
   document.getElementById('live-count').classList.add('hidden');
+
+  savePickToFirestore(n);
 }
 
 function tossCoin() {
@@ -51,9 +72,8 @@ function tossCoin() {
   animation.classList.remove('hidden');
 
   let flipInterval = null;
-  let currentFace = true; // true = head, false = tail
+  let currentFace = true;
 
-  // Start alternating coin face during animation
   flipInterval = setInterval(() => {
     coinImg.src = currentFace ? 'head.png' : 'tail.png';
     currentFace = !currentFace;
@@ -63,7 +83,7 @@ function tossCoin() {
   const finalResult = Math.random() < 0.5 ? 'H' : 'T';
 
   setTimeout(() => {
-    clearInterval(flipInterval); // stop the flip
+    clearInterval(flipInterval);
     outcomes.push(finalResult);
     currentToss++;
 
@@ -102,6 +122,26 @@ function processResult() {
   if (!database[selectedCoins][label]) database[selectedCoins][label] = 0;
   database[selectedCoins][label]++;
   totalTosses[selectedCoins]++;
+  saveTossToFirestore(selectedCoins, label);
+}
+
+async function saveTossToFirestore(n, label) {
+  const docRef = db.collection("tosses").doc(`${n}Coins`);
+  const docSnap = await docRef.get();
+  let data = docSnap.exists ? docSnap.data() : { results: {}, total: 0, picks: 0 };
+
+  data.results[label] = (data.results[label] || 0) + 1;
+  data.total++;
+  await docRef.set(data);
+}
+
+async function savePickToFirestore(n) {
+  const docRef = db.collection("tosses").doc(`${n}Coins`);
+  const docSnap = await docRef.get();
+  let data = docSnap.exists ? docSnap.data() : { results: {}, total: 0, picks: 0 };
+
+  data.picks = (data.picks || 0) + 1;
+  await docRef.set(data);
 }
 
 function showTable() {
@@ -143,7 +183,6 @@ function showLeaderboard() {
     body.innerHTML += `<tr><td>${k} Coin(s)</td><td>${v}</td></tr>`;
   });
 }
-
 
 function showAllTables() {
   const container = document.getElementById('all-prob-container');
