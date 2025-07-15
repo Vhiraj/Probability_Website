@@ -1,8 +1,9 @@
 let selectedCoins = 0;
 let currentToss = 0;
 let outcomes = [];
-let database = { 1: {}, 2: {}, 3: {}, 4: {} };
-let totalTosses = { 1: 0, 2: 0, 3: 0, 4: 0 };
+let database = JSON.parse(localStorage.getItem("database")) || { 1: {}, 2: {}, 3: {}, 4: {} };
+let totalTosses = JSON.parse(localStorage.getItem("totalTosses")) || { 1: 0, 2: 0, 3: 0, 4: 0 };
+let picks = JSON.parse(localStorage.getItem("picks")) || { 1: 0, 2: 0, 3: 0, 4: 0 };
 let picks = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
 function toggleMenu() {
@@ -17,22 +18,28 @@ function showTestMenu() {
 function startToss(n) {
   selectedCoins = n;
   picks[n]++;
+  localStorage.setItem("picks", JSON.stringify(picks)); // ✅ Save pick data
+
   currentToss = 0;
   outcomes = [];
 
   hideAll();
   document.getElementById('toss-section').classList.remove('hidden');
 
+  // Reset coin image properly
   const coinImg = document.getElementById('coin-image');
   coinImg.style.display = 'none';
-  coinImg.src = '';
+  coinImg.src = ''; // Clear src to prevent old image flashes
 
+  // Hide messages and reset button
   document.getElementById('result-msg').classList.add('hidden');
+  document.getElementById('result-msg').textContent = '';
   document.getElementById('toss-button').textContent = "Toss Coin 1";
   document.getElementById('toss-button').classList.remove('hidden');
   document.getElementById('after-toss-options').classList.add('hidden');
   document.getElementById('live-count').classList.add('hidden');
 }
+
 
 function tossCoin() {
   const coinImg = document.getElementById('coin-image');
@@ -102,6 +109,8 @@ function processResult() {
   if (!database[selectedCoins][label]) database[selectedCoins][label] = 0;
   database[selectedCoins][label]++;
   totalTosses[selectedCoins]++;
+  localStorage.setItem("database", JSON.stringify(database));
+  localStorage.setItem("totalTosses", JSON.stringify(totalTosses));
 }
 
 function showTable() {
