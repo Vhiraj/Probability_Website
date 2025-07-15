@@ -18,7 +18,7 @@ function showTestMenu() {
 function startToss(n) {
   selectedCoins = n;
   picks[n]++;
-  localStorage.setItem("picks", JSON.stringify(picks)); // ✅ Save pick data
+  localStorage.setItem("picks", JSON.stringify(picks)); // save pick count
 
   currentToss = 0;
   outcomes = [];
@@ -26,12 +26,12 @@ function startToss(n) {
   hideAll();
   document.getElementById('toss-section').classList.remove('hidden');
 
-  // Reset coin image properly
+  // Clear image before first toss
   const coinImg = document.getElementById('coin-image');
   coinImg.style.display = 'none';
-  coinImg.src = ''; // Clear src to prevent old image flashes
+  coinImg.src = '';
 
-  // Hide messages and reset button
+  // Reset UI
   document.getElementById('result-msg').classList.add('hidden');
   document.getElementById('result-msg').textContent = '';
   document.getElementById('toss-button').textContent = "Toss Coin 1";
@@ -141,17 +141,32 @@ function showLeaderboard() {
   hideAll();
   document.getElementById('leaderboard').classList.remove('hidden');
 
+  // Find most picked
   let max = Math.max(...Object.values(picks));
-  let mostPicked = Object.entries(picks).filter(([_, v]) => v === max)[0][0];
+  let mostPickedEntry = Object.entries(picks).find(([_, v]) => v === max);
+  let mostPicked = mostPickedEntry ? mostPickedEntry[0] : "None";
 
-  document.getElementById('most-picked').textContent = `${mostPicked} Coins (${max} times)`;
+  document.getElementById('most-picked').textContent = `${mostPicked} Coin(s) (${max} times)`;
 
+  // Build leaderboard table
   const body = document.getElementById('leaderboard-body');
-  body.innerHTML = '';
-  Object.entries(picks).forEach(([k, v]) => {
-    body.innerHTML += `<tr><td>${k} Coin(s)</td><td>${v}</td></tr>`;
-  });
+  body.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Coin Option</th>
+          <th>Times Picked</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${Object.entries(picks)
+          .map(([k, v]) => `<tr><td>${k} Coin(s)</td><td>${v}</td></tr>`)
+          .join('')}
+      </tbody>
+    </table>
+  `;
 }
+
 
 
 function showAllTables() {
